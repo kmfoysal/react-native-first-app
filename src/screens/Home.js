@@ -1,5 +1,7 @@
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
 import Text from '../components/Text/Text'
@@ -8,6 +10,7 @@ import { colors } from '../theme/colors'
 import { spacing } from '../theme/spacing'
 
 const Home= () => {
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
             <View>
@@ -18,12 +21,13 @@ const Home= () => {
                     keyExtractor = {(item) => item.name }
                     renderItem={({item}) => {
                         return(
-                            <View style={styles.container}>
+                            <Pressable onPress={() => navigation.navigate('Details') } style={styles.container}>
                                 <View style={styles.left}>
                                     <View style={[styles.circle, {backgroundColor: item.color}]} />
                                     <Text preset='h4' style={styles.itemName}>{item.name}</Text>
                                 </View>
-                            </View>
+                                <Feather name="chevron-right" size={24} color="white" />
+                            </Pressable>
                         )
                     }}
                     ItemSeparatorComponent = {() => <View style={styles.separator}/>}
@@ -36,7 +40,9 @@ const Home= () => {
 const styles = StyleSheet.create({
     container : {
         flex: 1,
-        justifyContent : 'center'
+        flexDirection : 'row',
+        justifyContent : 'space-between',
+        alignItems : 'center'
     },
 
     list : {
